@@ -1,5 +1,12 @@
+/*
+    Author: Amay Kataria
+    Date: 09/17/2023
+    Description: Whale model class - this is deconstructed using the glstf into
+    seperate nodes to allow us to clone it cleanly and modify it with the Yuka Game system.
+*/
+
 import { useEffect, useMemo, useRef } from 'react'
-import { useGLTF, Clone, useAnimations} from "@react-three/drei"
+import { useGLTF, useAnimations} from "@react-three/drei"
 import { useGraph } from '@react-three/fiber';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
 

@@ -1,5 +1,11 @@
+/*
+    Author: Amay Kataria
+    Date: 09/17/2023
+    Description: Top level class that wraps the R3F Canvas for this app.
+*/
+
 import { Canvas } from '@react-three/fiber'
-import Experience from '../components/Experience.tsx'
+import Experience from './Experience.tsx'
 
 export default function WhaleCanvas () {
     return <>
