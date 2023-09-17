@@ -6,7 +6,7 @@
 */
 
 import { useState, useEffect } from 'react';
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, Stage, Caustics } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
 import WhaleManager from './WhaleManager';
 import Aquarium, { Box_Params } from './Aquarium';
@@ -28,12 +28,15 @@ export default function Experience()
     }, []);
 
     return <>
-        {showPerf ? <Perf position="top-left" /> : <></> }
-        <OrbitControls makeDefault />
-        <ambientLight color="white" />
-        <WhaleManager />
-        <Aquarium scale={[Box_Params.width, Box_Params.height, Box_Params.depth]} />
-   
+        <Stage shadows={'contact'} intensity={0.5}>
+            <group position={[0, 45, 0]}>
+                {showPerf ? <Perf position="top-left" /> : <></> }
+                <OrbitControls makeDefault />
+                <ambientLight color="white" />
+                <WhaleManager />
+                <Aquarium scale={[Box_Params.width, Box_Params.height, Box_Params.depth]} />
+            </group>
+        </Stage>
         {/* <gridHelper args={[50, 50]} /> */}
     </>
 }

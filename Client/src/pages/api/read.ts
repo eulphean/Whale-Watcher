@@ -12,7 +12,6 @@ const headers = {
         'x-api-key': API_KEY
     }
 };
-  
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,7 +23,7 @@ export default async function handler(
       `${link}${params}`,
       headers
     )).data;
-    console.log(response)
+    // console.log(response)
     return res.status(200).json(response);
   } catch (error: any) {
     console.log(error);

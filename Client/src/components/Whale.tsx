@@ -9,7 +9,9 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useGLTF, useAnimations} from "@react-three/drei"
 import { useGraph } from '@react-three/fiber';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
+import * as THREE from 'three'
 
+const mat = new THREE.MeshNormalMaterial();
 export default function Whale(props) {
   const group = useRef();
   const { scene, materials, animations } = useGLTF("/whale.gltf");
@@ -31,11 +33,11 @@ export default function Whale(props) {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="WhaleArmature" rotation={[0, -0.161, 0]}>
+        <group  name="WhaleArmature" rotation={[0, -0.161, 0]}>
           <skinnedMesh
             name="Whale"
             geometry={nodes.Whale.geometry}
-            material={materials.Whale}
+            material={mat}
             skeleton={nodes.Whale.skeleton}
           />
           <primitive object={nodes.Bone} />

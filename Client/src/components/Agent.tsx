@@ -85,7 +85,7 @@ export default class Agent extends YUKA.GameEntity {
             this.target.position.set(x, y, z);
         } else {
 			const radius = Box_Params.width/2 * 2.0;
-			const phi = Math.acos( ( 2 * Math.random() ) - 1 );
+			const phi = Math.acos( ( Math.random() ) - 0.5 );
 			const theta = Math.random() * Math.PI * 2;
             v = new YUKA.Vector3(0, 0, 0).fromSpherical(radius, phi, theta);        
             // Update target position
