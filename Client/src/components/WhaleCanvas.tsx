@@ -6,6 +6,7 @@
 
 import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.tsx'
+import { Leva } from 'leva'
 
 export default function WhaleCanvas () {
     return <>

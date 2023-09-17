@@ -30,7 +30,7 @@ const styles = {
 
     subtitle: {
         fontSize: '30px',
-        fontWeight: '',
+        fontWeight: 'bold',
         marginBottom: '50px',
         fontFamily: 'monospace',
         textDecoration: 'underline'

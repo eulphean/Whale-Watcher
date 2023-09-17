@@ -40,7 +40,7 @@ export default function WhaleManager () {
     // Access all the whales that we just read from the contract.
     // Prune that whales that do not have the tokens anymore.
     const numRandomAgents = useGlobalStore((state) => state.numRandomAgents);
-    console.log(numRandomAgents);
+    // console.log(numRandomAgents);
     let topHolders, maxTokens, numWhales;
     if (numRandomAgents === 0) {
         topHolders = useGlobalStore((state) => state.topHolders);
@@ -48,7 +48,7 @@ export default function WhaleManager () {
         maxTokens = topHolders[0].numTokens; // It's ordered in ascending order.
     } else {
         // if we are not reading from the contract, we are using random agents.
-        console.log(numRandomAgents)
+        // console.log(numRandomAgents)
         numWhales = numRandomAgents;
     }
 
@@ -70,7 +70,7 @@ export default function WhaleManager () {
             if (numRandomAgents > 0) {
                 // We need random scale
                 scale = 0.5 + Math.floor(Math.random() * 3.5);
-                console.log(scale);
+                // console.log(scale);
             } else {
                 const numTokens = topHolders[i].numTokens;
                 scale = THREE.MathUtils.mapLinear(numTokens, maxTokens, 0, MAX_SCALE, MIN_SCALE);
