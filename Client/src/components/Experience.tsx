@@ -57,7 +57,9 @@ export default function Experience()
                 <ambientLight color="white" />
                 <WhaleManager />
                 <Aquarium scale={[Box_Params.width, Box_Params.height, Box_Params.depth]} />
-                <Sparkles position={[0, -4, 0]} count={1000} size={15} scale={30} color={"aqua"} noise={5.0} />
+                <group scale={[1.4, 0.55, 1.5]} position={[0, 1.5, 0]}>
+                    <Sparkles position={[0, -4, 0]} count={1000} size={10} scale={30} color={"aqua"} noise={5.0} />
+                </group>
             </group>
         </Stage>
         {/* <gridHelper args={[50, 50]} /> */}
