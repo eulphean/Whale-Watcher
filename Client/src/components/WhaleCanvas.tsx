@@ -15,7 +15,7 @@ export default function WhaleCanvas () {
                     fov: 45,
                     near: 0.1,
                     far: 5000,
-                    position: [ 0, 20, 0 ]
+                    position: [ 600, 900, 0 ]
                 } }
             >
                 <Experience />
