@@ -19,10 +19,10 @@ export default async function handler(
 ) {
   try {
     const { ethAddress } = req.body;
-    const response = (await axios.post(
-        `https://web3api.io/api/v2/addresses/${ethAddress}/transactions`,
-        { ethAddress },
-        headers
+    let params = req.body.params || "";
+    const response = (await axios.get(
+      `https://web3api.io/api/v2/addresses/${ethAddress}/token-balances/historical${params}`,
+      headers
     )).data;
     return res.status(200).json(response);
   } catch (error: any) {
