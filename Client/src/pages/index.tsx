@@ -4,44 +4,47 @@ import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
+function getUniqueHolders(data: any) {
+  // Extract all holders from the array
+  const holders = data.map((item: any) => item.holderAddress);
+
+  // Filter the holders array to only contain unique holders
+  // const uniqueHolders = [...new Set(holders)] as string[];
+
+  return holders;
+}
+
 export default function Home() {
   // example contract
   const ethAddress = '0x5af0d9827e0c53e4799bb226655a1de152a425a5';
   const [data, setData] = useState<any>();
+  const [uniqueHolders, setUniqueHolders] = useState<string[]>();
 
   useEffect(() => {
     const asyncReqs = async () => {
       try {
-      // https://docs.amberdata.io/reference/get-token-balances
-      const startDate = "2021-08-24T20%3A00%3A00.511Z";
-      const endDate = "2021-08-25T20%3A00%3A00.511Z";
-      const params = `?startDate=${startDate}&endDate=${endDate}&tokenAddress=${ethAddress}&page=0&size=200`;
-      const response = (await axios.post('/api/read', { ethAddress, params })).data;
-      const sliced = response.payload.records.slice(0, 100);
-      setData(sliced);
-
-      /* QUERY OBJECT EXAMPLE
-      {
-        address: "0x5af0d9827e0c53e4799bb226655a1de152a425a5",
-        amount: "0",
-        blockNumber: "13096482",
-        decimals: "0",
-        holder: "0x5af0d9827e0c53e4799bb226655a1de152a425a5",
-        isERC20: false,
-        isERC721: true,
-        isERC777: false,
-        isERC884: false,
-        isERC998: false,
-        isERC1155: false,
-        name: "Milady",
-        symbol: "MIL",
-        timestamp: "2021-08-25T19:48:48.000Z",
-      }
-
-      address: the originating mint address
-      amount: tokenId (it's mostly incorrect)
-      holder: current holder
-      */
+        //https://docs.amberdata.io/reference/get-token-holders
+        const startDate = "2021-08-25T20%3A00%3A00.511Z";
+        const endDate = "2021-09-26T20%3A00%3A00.511Z";
+        //startDate=${startDate}&endDate=${endDate}`;
+        const timeFrame = "30d";
+        const link = `https://web3api.io/api/v2/tokens/${ethAddress}/holders/latest`
+        const params = `?page=0&size=50&timeFrame=${timeFrame}&holderAddresses=${ethAddress}`
+        const response = (await axios.post('/api/read', { link, params })).data;
+        const holders = getUniqueHolders(response.payload.records);
+        setUniqueHolders(holders);
+        setData(response.payload.records);
+        
+        /* QUERY OBJECT EXAMPLE
+          {
+            "tokenAddress": "0x5af0d9827e0c53e4799bb226655a1de152a425a5",
+            "holderAddress": "0x29469395eaf6f95920e59f858042f0e28d98a20b",
+            "timestamp": 1694921207000,
+            "holderFirstTimestamp": "2023-05-01T18:20:47.000Z",
+            "numTokens": "459",
+            "decimals": "0"
+          }
+        */
 
       } catch {
         console.log('please provide a private key in .env.local');
@@ -56,6 +59,11 @@ export default function Home() {
     >
       <h1 className="text-4xl font-bold">Visualizer App</h1>
       <pre className="overflow-y-scroll h-screen pb-20 border-2 border-black">
+        <h2 className="text-black font-bold text-4xl text-center my-8 border-b-2 border-black">TOP HOLDERS</h2>
+        <code>
+          {uniqueHolders?.map((holder) => <div>{holder}</div>)}
+        </code>
+        <h2 className="text-black font-bold text-4xl text-center my-8 border-b-2 border-black">WHALES</h2>
         <code className="">
           {data ? JSON.stringify(data, null, 2) : ""}
         </code>

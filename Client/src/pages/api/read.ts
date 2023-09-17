@@ -18,12 +18,12 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   try {
-    const { ethAddress } = req.body;
-    let params = req.body.params || "";
+    const { link, params } = req.body;
     const response = (await axios.get(
-      `https://web3api.io/api/v2/addresses/${ethAddress}/token-balances/historical${params}`,
+      `${link}${params}`,
       headers
     )).data;
+    console.log(response)
     return res.status(200).json(response);
   } catch (error: any) {
     console.log(error);
