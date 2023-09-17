@@ -6,7 +6,7 @@ import { randomIntFromInterval } from './Helper';
 import { Box_Params } from './Aquarium';
 import Whale from './Whale';
 import { useControls } from 'leva';
-import YukaAgent from './YukaAgent'
+import Agent from './Agent'
 
 // Define the number of whales we want to use.
 const NUM_WHALES = 200;
@@ -38,11 +38,14 @@ export default function WhaleManager () {
 
             const posX = 12 * Math.sin(i * 2 * Math.PI / NUM_WHALES);
             const posZ = 12 * Math.cos(i * 2 * Math.PI/NUM_WHALES);
-            const agent = new YukaAgent(whaleMesh, targetMesh, posX, posZ);
+            const agent = new Agent(whaleMesh, targetMesh, posX, posZ);
            
             // Add everything to the entity manager, which will control the game entities
+            // entityManager.add(agent.target);
+            // entityManager.add(agent.vehicle);
+            entityManager.add(agent);
             entityManager.add(agent.target);
-            entityManager.add(agent.vehicle);
+            entityManager.add(agent.vehicle)
         }); 
     },[]);
 
