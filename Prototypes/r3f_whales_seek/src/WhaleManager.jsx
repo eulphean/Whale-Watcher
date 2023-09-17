@@ -6,6 +6,7 @@ import { randomIntFromInterval } from './Helper';
 import { Box_Params } from './Aquarium';
 import Whale from './Whale';
 import { useControls } from 'leva';
+import YukaAgent from './YukaAgent'
 
 // Define the number of whales we want to use.
 const NUM_WHALES = 200;
@@ -13,9 +14,9 @@ const NUM_WHALES = 200;
 let entityManager;
 export default function WhaleManager () {
     // All the whales
-    const whales = useRef([]);
+    const whaleRefs = useRef([]);
     // All the seek targets
-    const targets = useRef([]);
+    const targetRefs = useRef([]);
     const {hideTargets, hideWhales} = useControls('Whales', {
         hideTargets: true,
         hideWhales: false
@@ -26,37 +27,22 @@ export default function WhaleManager () {
         // Setup YUKA
         entityManager = new YUKA.EntityManager();
 
-        whales.current.map((v, i) => {
-            v.matrixAutoUpdate = false;
-
-            // Seek vehicle
-            const vehicle = new YUKA.Vehicle();
-            const s = 0.5 + Math.floor(Math.random() * 3.5);
-            vehicle.scale.set(s, s, s);
-            vehicle.position.x = 12 * Math.sin(i * 2 * Math.PI / NUM_WHALES);
-            vehicle.position.z = 12 * Math.cos(i * 2 * Math.PI/NUM_WHALES);
-            vehicle.rotation.fromEuler(0, 2 * Math.PI * Math.random(), 0);
-            vehicle.mass = 5; 
-            vehicle.maxSpeed = 1.2;
-            vehicle.boundaryRadius = 0.1;
-            vehicle.setRenderComponent(v, sync);
-
-            // Seek target
-            const yukaTarget = new YUKA.GameEntity();
-            const targetMesh = targets.current[i];
+        whaleRefs.current.map((whaleMesh, i) => {
+            // Really important property to set to make sure that three.js doesn't update the matrices for 
+            // this mesh. 
+            whaleMesh.matrixAutoUpdate = false;
+            
+            // Make sure three.js cannot update the matrices on the targetMesh as well.
+            const targetMesh = targetRefs.current[i];
             targetMesh.matrixAutoUpdate = false;
-            yukaTarget.setRenderComponent(targetMesh, sync);
 
-            // Seek behavior
-            const seekBehavior = new YUKA.SeekBehavior(yukaTarget.position);
-            vehicle.steering.add(seekBehavior);
-
+            const posX = 12 * Math.sin(i * 2 * Math.PI / NUM_WHALES);
+            const posZ = 12 * Math.cos(i * 2 * Math.PI/NUM_WHALES);
+            const agent = new YukaAgent(whaleMesh, targetMesh, posX, posZ);
+           
             // Add everything to the entity manager, which will control the game entities
-            entityManager.add(yukaTarget);
-            entityManager.add(vehicle);
-
-            // Start generating a target for us to seek to.
-            setSeekTarget(yukaTarget);
+            entityManager.add(agent.target);
+            entityManager.add(agent.vehicle);
         }); 
     },[]);
 
@@ -64,26 +50,13 @@ export default function WhaleManager () {
         entityManager.update(delta);
     });
 
-    // Entity: Vehicle that is updated
-    // renderComponent: Whale object
-    const sync = (entity, ref) => {
-        ref.matrix.copy(entity.worldMatrix);
-    }
-
-    const setSeekTarget = (target) => {
-        const x = randomIntFromInterval(-Box_Params.width/2, Box_Params.width/2);
-        const y = randomIntFromInterval(-Box_Params.height/2, Box_Params.height/2);
-        const z = randomIntFromInterval(-Box_Params.depth/2, Box_Params.depth/2);
-        target.position.set(x, y, z);
-        setTimeout(() => setSeekTarget(target), 10000);
-    }
-
     return <>
-         {/* Note: YUKA ref is on the group and not on the actual mesh */}
+         {/* Note: YUKA ref is on the group and not on the actual mesh, 
+         so we are not applying transforms on the mesh */}
          {[...Array(NUM_WHALES)].map((v, i) => 
             <group 
                 key={i}
-                ref={ref => whales.current[i] = ref}
+                ref={ref => whaleRefs.current[i] = ref}
             >
                 <Whale visible={!hideWhales} />
             </group>
@@ -91,7 +64,7 @@ export default function WhaleManager () {
         {[...Array(NUM_WHALES)].map((v, i) => 
             <group
                 key={i}
-                ref={ref => targets.current[i] = ref}
+                ref={ref => targetRefs.current[i] = ref}
             >
                 <mesh visible={!hideTargets} scale={0.1}>
                     <sphereGeometry />
