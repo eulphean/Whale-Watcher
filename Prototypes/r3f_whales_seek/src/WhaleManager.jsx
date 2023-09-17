@@ -8,7 +8,7 @@ import Whale from './Whale';
 import { useControls } from 'leva';
 
 // Define the number of whales we want to use.
-const NUM_WHALES = 50;
+const NUM_WHALES = 200;
 
 let entityManager;
 export default function WhaleManager () {
@@ -31,12 +31,10 @@ export default function WhaleManager () {
 
             // Seek vehicle
             const vehicle = new YUKA.Vehicle();
-            const s = 1 + Math.floor(Math.random() * 2);
+            const s = 0.5 + Math.floor(Math.random() * 3.5);
             vehicle.scale.set(s, s, s);
-            vehicle.position.x = 5 * Math.sin(i * 2 * Math.PI / NUM_WHALES);
-            vehicle.position.z = 5 * Math.cos(i * 2 * Math.PI/NUM_WHALES);
-            //vehicle.position.x = 0;
-            //vehicle.position.z = 0;
+            vehicle.position.x = 12 * Math.sin(i * 2 * Math.PI / NUM_WHALES);
+            vehicle.position.z = 12 * Math.cos(i * 2 * Math.PI/NUM_WHALES);
             vehicle.rotation.fromEuler(0, 2 * Math.PI * Math.random(), 0);
             vehicle.mass = 5; 
             vehicle.maxSpeed = 1.2;
@@ -73,13 +71,11 @@ export default function WhaleManager () {
     }
 
     const setSeekTarget = (target) => {
-        console.log(target);
-        // 20, 10, 30
         const x = randomIntFromInterval(-Box_Params.width/2, Box_Params.width/2);
         const y = randomIntFromInterval(-Box_Params.height/2, Box_Params.height/2);
         const z = randomIntFromInterval(-Box_Params.depth/2, Box_Params.depth/2);
         target.position.set(x, y, z);
-        setTimeout(() => setSeekTarget(target), 5000 );
+        setTimeout(() => setSeekTarget(target), 10000);
     }
 
     return <>

@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
-// Size of the aquarium
+// Size of the Aquarium hosting the whales.
 export const Box_Params = {
-    width: 20,
-    height: 10,
-    depth: 30
+    width: 30,
+    height: 18,
+    depth: 40
 };
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1); 
