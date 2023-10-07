@@ -11,7 +11,7 @@ import { OrbitControls, CameraControls, Stage, Sparkles } from '@react-three/dre
 import { Perf } from 'r3f-perf'
 import WhaleManager from './WhaleManager';
 import Aquarium, { Box_Params } from './Aquarium';
-import { useControls } from 'leva';
+import { useControls, button } from 'leva';
 import { Leva } from 'leva';
 import * as TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
@@ -20,14 +20,21 @@ const newPosition = {x: -30, y: 20, z: 60};
 const lookAt = new THREE.Vector3(0, 0, 0);
 let tween;
 export default function Experience()
-{
+{   
+
+    const {gl, camera} = useThree();
+
     const {showPerf} = useControls('Experience', {
-        showPerf: false
+        showPerf: false,
+        screenshot: button(() => {
+            const link = document.createElement('a')
+            link.setAttribute('download', 'canvas.png')
+            link.setAttribute('href', gl.domElement.toDataURL('image/png').replace('image/png', 'image/octet-stream'))
+            link.click()
+        })
     });
 
     const [hide, setHide] = useState(false);
-
-    const {gl, camera} = useThree();
 
     useEffect(() => {
         tween = new TWEEN.Tween(camera.position)
@@ -50,8 +57,8 @@ export default function Experience()
     });
 
     return <>
-        <Stage shadows={'contact'} intensity={0.5}>
-            <group position={[0, 45, 0]}>
+        <Stage shadows={'contact'} intensity={0.1}>
+            <group position={[0, 50, 0]}>
                 {showPerf ? <Perf position="top-left" /> : <></> }
                 <OrbitControls autoRotate={true} autoRotateSpeed={0.5} makeDefault />
                 <ambientLight color="white" />

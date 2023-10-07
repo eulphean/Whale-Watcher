@@ -24,11 +24,11 @@ export default function Aquarium (props) {
             <MeshTransmissionMaterial 
                 color={'aqua'}
                 sheenColor={"white"}
-                transmission={0.84} 
+                transmission={0.85} 
                 roughness={0.1}
                 thickness={0.01} />
         </mesh>
-        <primitive {...props} object={line} />
+        {/* <primitive {...props} object={line} /> */}
     </>
 }
 

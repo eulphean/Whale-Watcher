@@ -53,36 +53,3 @@ export default function Whale(props) {
 }
 
 useGLTF.preload("/whale.gltf");
-
-// NON-UNPACKED VERSION OF THE MODEL
-// export default function Whale(props)
-// {
-//     // When we call this twice, the previous instance is used. 
-//     // It's memoized through the calls. 
-//     const whale = useGLTF('./whale.gltf');
-//     const clone = useMemo(() => SkeletonUtils.clone(whale.scene), [whale.scene]);
-//     const animations = useAnimations(whale.animations, clone);
-
-//     useEffect(() => {
-//         const action = animations.actions['Swim'];
-//         // Add some degree of randomness about when things start.
-//         action.startAt(Math.random() * 5.0).play();
-
-//         return (() => {
-//             action.fadeOut(0.5);
-//             console.log('Cleanup')
-//         });
-//     }, []);
-
-//     return <>
-//         <primitive object={clone} />
-//     </>
-// }
-
-// When testing with simple cone geometries, bring this back.
-// return <>
-// <mesh rotation-x={Math.PI/2} >
-//     <coneGeometry args={[0.1, 0.5, 8]} />
-//     <meshNormalMaterial/>
-// </mesh>
-// </>
