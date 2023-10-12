@@ -15,16 +15,6 @@ import useGlobalStore from './stores/useGlobalStore';
 import * as THREE from 'three'
 import { MAX_SCALE, MIN_SCALE } from './Helper';
 
-function getCleanHolders(topHolders) {
-    let num = 0;
-    topHolders.forEach(t => {
-        if (t.numTokens > 0) {
-            num++;
-        }
-    });
-    return num;
-}
-
 let entityManager;
 export default function WhaleManager () {
     // All the whales
@@ -36,21 +26,11 @@ export default function WhaleManager () {
         hideWhales: false
     });
 
-    // [Only if we don't have any random agents]
-    // Access all the whales that we just read from the contract.
-    // Prune that whales that do not have the tokens anymore.
-    const numRandomAgents = useGlobalStore((state) => state.numRandomAgents);
-    // console.log(numRandomAgents);
     let topHolders, maxTokens, numWhales;
-    if (numRandomAgents === 0) {
-        topHolders = useGlobalStore((state) => state.topHolders);
-        numWhales = getCleanHolders(topHolders); // Some of the holders have 0 tokens - let's ignore them.
-        maxTokens = topHolders[0].numTokens; // It's ordered in ascending order.
-    } else {
-        // if we are not reading from the contract, we are using random agents.
-        // console.log(numRandomAgents)
-        numWhales = numRandomAgents;
-    }
+    topHolders = useGlobalStore((state) => state.topHolders);
+    numWhales = topHolders.length;
+    maxTokens = topHolders[0]['held_count']; // It's ordered in ascending order.
+    console.log(maxTokens);
 
     // Component is getting initialized, let's do this right now. 
     useEffect(() => {
@@ -65,17 +45,10 @@ export default function WhaleManager () {
             // Make sure three.js cannot update the matrices on the targetMesh as well.
             const targetMesh = targetRefs.current[i];
             targetMesh.matrixAutoUpdate = false;
-
-            let scale;
-            if (numRandomAgents > 0) {
-                // We need random scale
-                scale = 0.5 + Math.floor(Math.random() * 3.5);
-                // console.log(scale);
-            } else {
-                const numTokens = topHolders[i].numTokens;
-                scale = THREE.MathUtils.mapLinear(numTokens, maxTokens, 0, MAX_SCALE, MIN_SCALE);
-                console.log(numTokens + ', ' + scale);
-            }            
+   
+            const numTokens = topHolders[i]['held_count'];
+            const scale = THREE.MathUtils.mapLinear(numTokens, maxTokens, 0, MAX_SCALE, MIN_SCALE);
+            // console.log(numTokens + ', ' + scale);        
 
             const posX = 12 * Math.sin(i * 2 * Math.PI / numWhales);
             const posZ = 12 * Math.cos(i * 2 * Math.PI/ numWhales);
@@ -118,3 +91,38 @@ export default function WhaleManager () {
         )}
     </>
 }
+
+    // // [Only if we don't have any random agents]
+    // // Access all the whales that we just read from the contract.
+    // // Prune that whales that do not have the tokens anymore.
+    // const numRandomAgents = useGlobalStore((state) => state.numRandomAgents);
+    // // console.log(numRandomAgents);
+    // let topHolders, maxTokens, numWhales;
+    // if (numRandomAgents === 0) {
+    //     topHolders = useGlobalStore((state) => state.topHolders);
+    //     numWhales = getCleanHolders(topHolders); // Some of the holders have 0 tokens - let's ignore them.
+    //     maxTokens = topHolders[0].numTokens; // It's ordered in ascending order.
+    // } else {
+    //     // if we are not reading from the contract, we are using random agents.
+    //     // console.log(numRandomAgents)
+    //     numWhales = numRandomAgents;
+    // }
+    // function getCleanHolders(topHolders) {
+    //     let num = 0;
+    //     topHolders.forEach(t => {
+    //         if (t.numTokens > 0) {
+    //             num++;
+    //         }
+    //     });
+    //     return num;
+// }
+    // let scale;
+// if (numRandomAgents > 0) {
+//     // We need random scale
+//     scale = 0.5 + Math.floor(Math.random() * 3.5);
+//     // console.log(scale);
+// } else {
+//     const numTokens = topHolders[i].numTokens;
+//     scale = THREE.MathUtils.mapLinear(numTokens, maxTokens, 0, MAX_SCALE, MIN_SCALE);
+//     console.log(numTokens + ', ' + scale);
+// } 

@@ -16,7 +16,7 @@ class DuneController {
             const url = `https://api.dune.com/api/v1/execution/${executeId}/results`;
             const response = await axios.post('/api/read', {url});
             const result = response.data['result']['rows'];
-            console.log(result);
+            return result;
         } catch(event) {
             console.log('Something seriously went wrong in here. ');
             console.log(event);

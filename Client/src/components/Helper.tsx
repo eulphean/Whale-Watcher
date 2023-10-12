@@ -9,8 +9,8 @@ export function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-export const MAX_SCALE = 5.5;
-export const MIN_SCALE = 0.8;
+export const MAX_SCALE = 6.0;
+export const MIN_SCALE = 1.5;
 
 export const MAX_MASS = 8;
 export const MIN_MASS = 2; 
