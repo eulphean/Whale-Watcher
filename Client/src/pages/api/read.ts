@@ -3,13 +3,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 
 const API_KEY = process.env.API_KEY;
-console.log(API_KEY);
 
 const headers = {
     headers: {
-        accept: 'application/json',
-        'x-amberdata-blockchain-id': 'ethereum-mainnet',
-        'x-api-key': API_KEY
+        "Content-Type": 'application/json',
+        'x-dune-api-key': API_KEY
     }
 };
 
@@ -18,12 +16,11 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   try {
-    const { link, params } = req.body;
+    const {url} = req.body;
     const response = (await axios.get(
-      `${link}${params}`,
+      `${url}`,
       headers
     )).data;
-    // console.log(response)
     return res.status(200).json(response);
   } catch (error: any) {
     console.log(error);

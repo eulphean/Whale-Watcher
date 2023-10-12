@@ -16,7 +16,7 @@ export default function Home() {
   }, []);
   
   // NOTE: We set showExperience to true (for some time)
-  const [showExperience, setShowExperience] = useState(true);
+  const [showExperience, setShowExperience] = useState(false);
 
   return <>
     {showExperience ? 

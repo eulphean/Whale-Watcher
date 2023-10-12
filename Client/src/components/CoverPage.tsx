@@ -4,9 +4,9 @@
     Description: Cover page for the MVP
 */
 import axios from 'axios';
-import { Inter } from 'next/font/google';
 import { useState } from "react"
 import useGlobalStore from "./stores/useGlobalStore";
+import DuneController from "./controllers/DuneController";
 
 const styles = {
     artists: {
@@ -110,40 +110,10 @@ export default function CoverPage (props) {
 
     const startContractExperience = (event) => {
         setHideUI(true);
-
-        const asyncReqs = async () => {
-            try {
-                //https://docs.amberdata.io/reference/get-token-holders
-                const startDate = "2021-08-25T20%3A00%3A00.511Z";
-                const endDate = "2021-09-26T20%3A00%3A00.511Z";
-                //startDate=${startDate}&endDate=${endDate}`;
-                const timeFrame = "30d";
-                const link = `https://web3api.io/api/v2/tokens/${address}/holders/latest`
-                const params = `?page=0&size=100&timeFrame=${timeFrame}&holderAddresses=${address}`
-                const response = (await axios.post('/api/read', { link, params })).data;
-                // const holders = getUniqueHolders(response.payload.records);
-                useGlobalStore.setState({ topHolders: response.payload.records});
-                
-                /* QUERY OBJECT EXAMPLE
-                {
-                    "tokenAddress": "0x5af0d9827e0c53e4799bb226655a1de152a425a5",
-                    "holderAddress": "0x29469395eaf6f95920e59f858042f0e28d98a20b",
-                    "timestamp": 1694921207000,
-                    "holderFirstTimestamp": "2023-05-01T18:20:47.000Z",
-                    "numTokens": "459",
-                    "decimals": "0"
-                }
-                */
-        
-            } catch (event) {
-                console.log(event);
-                console.log('please provide a private key in .env.local');
-            }
-        }
-        asyncReqs();
+        DuneController.getData('01HCG9P9N84K1ZJW35SXGDVP3W');
 
         // Wait a tiny bit before loading this jazz.
-        setTimeout(props.onShowExperience, 2000);
+        // setTimeout(props.onShowExperience, 2000);
     }
 
     const startRandomExperience = (event) => {
