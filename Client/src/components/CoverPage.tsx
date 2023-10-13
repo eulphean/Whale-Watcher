@@ -26,8 +26,9 @@ export default function CoverPage (props) {
         const result = await DuneController.getData(value);
         useGlobalStore.setState({ topHolders: result });
 
-        // Update the UI now. 
-        props.onShowExperience();
+        setTimeout(() => props.onShowExperience(), 2000);
+        // // Update the UI now. 
+        // props.onShowExperience();
     }
 
     const onItemSelected = (event) => {
@@ -51,7 +52,7 @@ export default function CoverPage (props) {
                         <option value="01HCG9GABVSKYCWQ9YBFTST2XQ">Moonbirds</option>
                         <option value="01HCG9XV3H52FNJRY18QK034V7">The Potatoz</option>
                         <option value="01HCG9W8QE5VZK5PE1ZEQSBAZF">The Captainz</option>
-                        <option value="01HCG9P9N84K1ZJW35SXGDVP3WR">Pudgy Penguins</option>
+                        <option value="01HCG9P9N84K1ZJW35SXGDVP3W">Pudgy Penguins</option>
                         <option value="01HCG9J9D9DNGKY2TW6NHG81AR">Wrapped CryptoPunks</option>
                         <option value="01HCG9AF9S4E5ZDDQ2W3AJ2VAR">Bored Ape Yacht Club</option>
                         <option value="01HCG9KCFQ6G1ZB6ZCJYNBGGFE">Mutant Ape Yacht Club</option>
