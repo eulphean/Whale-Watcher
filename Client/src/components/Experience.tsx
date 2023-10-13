@@ -11,6 +11,7 @@ import { OrbitControls, CameraControls, Stage, Sparkles } from '@react-three/dre
 import { Perf } from 'r3f-perf'
 import WhaleManager from './WhaleManager';
 import Aquarium, { Box_Params } from './Aquarium';
+import Effects from './Effects';
 import { useControls, button } from 'leva';
 import { Leva } from 'leva';
 import * as TWEEN from '@tweenjs/tween.js'

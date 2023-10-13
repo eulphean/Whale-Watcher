@@ -22,13 +22,9 @@ export default function CoverPage (props) {
     const startContractExperience = async (event) => {
         // Show
         setShowLoading(true);
-        
         const result = await DuneController.getData(value);
         useGlobalStore.setState({ topHolders: result });
-
         setTimeout(() => props.onShowExperience(), 2000);
-        // // Update the UI now. 
-        // props.onShowExperience();
     }
 
     const onItemSelected = (event) => {

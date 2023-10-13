@@ -5,8 +5,9 @@
     ecosystem.
 */
 
-import { useFrame } from '@react-three/fiber';
-import { useRef, useEffect } from 'react';
+import { useFrame} from '@react-three/fiber';
+import { Html } from '@react-three/drei';
+import { useRef, useEffect, useState } from 'react';
 import * as YUKA from 'yuka'
 import Whale from './Whale';
 import { useControls } from 'leva';
@@ -21,6 +22,9 @@ export default function WhaleManager () {
     const whaleRefs = useRef([]);
     // All the seek targets
     const targetRefs = useRef([]);
+    // Refs for all the html elements.
+    const htmlRefs = useRef([]);
+
     const {hideTargets, hideWhales} = useControls('Whales', {
         hideTargets: true,
         hideWhales: false
@@ -36,7 +40,7 @@ export default function WhaleManager () {
     useEffect(() => {
         // Setup YUKA
         entityManager = new YUKA.EntityManager();
-
+        console.log(htmlRefs);
         whaleRefs.current.map((whaleMesh, i) => {
             // Really important property to set to make sure that three.js doesn't update the matrices for 
             // this mesh. 
@@ -59,13 +63,18 @@ export default function WhaleManager () {
             // entityManager.add(agent.vehicle);
             entityManager.add(agent);
             entityManager.add(agent.target);
-            entityManager.add(agent.vehicle)
+            entityManager.add(agent.vehicle);
         }); 
     },[]);
 
     useFrame((state, delta) => {
         entityManager.update(delta);
     });
+
+    const onPointerEnter = (event, i) => {
+        const htmlRef = htmlRefs.current[i];
+        htmlRef.style.opacity = 1; 
+    }
 
     return <>
          {/* Note: YUKA ref is on the group and not on the actual mesh, 
@@ -74,7 +83,20 @@ export default function WhaleManager () {
             <group 
                 key={i}
                 ref={ref => whaleRefs.current[i] = ref}
+                onPointerOver={(event) => onPointerEnter(event, i)}
             >
+                <Html
+                    ref={ref => htmlRefs.current[i] = ref}
+                    style={{
+                        transition: 'all 0.25s',
+                        color: "red",
+                        textDecoration: "underline",
+                        fontSize: 16,
+                        opacity: 0
+                    }}
+                >
+                    {<a target="_blank" href={`https://etherscan.io/address/${topHolders[i]['address']}`}>{topHolders[i]['address']}</a>}
+                </Html>
                 <Whale visible={!hideWhales} />
             </group>
         )}
@@ -91,38 +113,3 @@ export default function WhaleManager () {
         )}
     </>
 }
-
-    // // [Only if we don't have any random agents]
-    // // Access all the whales that we just read from the contract.
-    // // Prune that whales that do not have the tokens anymore.
-    // const numRandomAgents = useGlobalStore((state) => state.numRandomAgents);
-    // // console.log(numRandomAgents);
-    // let topHolders, maxTokens, numWhales;
-    // if (numRandomAgents === 0) {
-    //     topHolders = useGlobalStore((state) => state.topHolders);
-    //     numWhales = getCleanHolders(topHolders); // Some of the holders have 0 tokens - let's ignore them.
-    //     maxTokens = topHolders[0].numTokens; // It's ordered in ascending order.
-    // } else {
-    //     // if we are not reading from the contract, we are using random agents.
-    //     // console.log(numRandomAgents)
-    //     numWhales = numRandomAgents;
-    // }
-    // function getCleanHolders(topHolders) {
-    //     let num = 0;
-    //     topHolders.forEach(t => {
-    //         if (t.numTokens > 0) {
-    //             num++;
-    //         }
-    //     });
-    //     return num;
-// }
-    // let scale;
-// if (numRandomAgents > 0) {
-//     // We need random scale
-//     scale = 0.5 + Math.floor(Math.random() * 3.5);
-//     // console.log(scale);
-// } else {
-//     const numTokens = topHolders[i].numTokens;
-//     scale = THREE.MathUtils.mapLinear(numTokens, maxTokens, 0, MAX_SCALE, MIN_SCALE);
-//     console.log(numTokens + ', ' + scale);
-// } 
