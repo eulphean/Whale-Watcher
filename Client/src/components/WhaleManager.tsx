@@ -95,7 +95,7 @@ export default function WhaleManager () {
                         opacity: 0
                     }}
                 >
-                    {<a target="_blank" href={`https://etherscan.io/address/${topHolders[i]['address']}`}>{topHolders[i]['address']}</a>}
+                    {<a target="_blank" href={`https://etherscan.io/address/${topHolders[i]['address']}`}>{topHolders[i]['ens_name'] || topHolders[i]['address']}</a>}
                 </Html>
                 <Whale visible={!hideWhales} />
             </group>
