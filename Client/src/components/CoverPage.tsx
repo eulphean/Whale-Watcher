@@ -32,7 +32,7 @@ export default function CoverPage (props) {
     }
 
     return <>
-        <div className={'h-screen flex flex-col items-center justify-center'}>   
+        <div className={'h-screen flex flex-col items-center justify-center text-black'}>   
             <div className="text-6xl font-serif italic">Whale Watcher</div>  
             {showLoading ? <div>Loading things up...</div> : 
                <div className="flex flex-col items-center gap-2 mt-6">
