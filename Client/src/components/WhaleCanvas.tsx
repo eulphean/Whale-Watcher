@@ -21,9 +21,9 @@ export default function WhaleCanvas () {
                 gl={{ preserveDrawingBuffer: true }}
             >
                 {/* <color args={['#ffffff']} attach={'background'} /> */}
-                <Leva
+                {/* <Leva
                     hidden // default = false, when true the GUI is hidden
-                />
+                /> */}
                 <Experience />
             </Canvas>
         </div>
