@@ -4,5 +4,4 @@ Whale Watcher is an innovative tool designed to provide NFT creators with an unp
 With Whale Watcher, creators can gain insights into their legacy and the loyalty of their collectors. Each whale in the visualization represents a wallet address that holds assets from the collection, with the size of the whale corresponding to the number of NFTs owned. This feature enables users to easily identify devoted hodlers and the most prominent collectors.The project was developed in collaboration with Max Knivets and Blair McKee, and is currently undergoing further development for an upcoming production release.
 <br />
 
-
-![Whale-Good](https://github.com/eulphean/Whale-Watcher/assets/4178424/0fbbd3fb-dda5-4809-a33e-8163284a94bd)
+![Whale (4)](https://github.com/eulphean/Whale-Watcher/assets/4178424/8a52f469-606c-4157-817b-00f8edce6100)
