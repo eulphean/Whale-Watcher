@@ -16,7 +16,7 @@ function getUniqueHolders(data: any) {
   
 export default function CoverPage (props) {
     // Default value of the select box is Azuki - this is the value associated with it.
-    const [value, setValue] = useState("01HCG9DM9TPF7KFPRV43W10RSY");
+    const [value, setValue] = useState("01J1WGNKX7WG5QF1BMNZ1GK79J");
     const [showLoading, setShowLoading] = useState(false);
 
     const startContractExperience = async (event) => {
@@ -41,17 +41,17 @@ export default function CoverPage (props) {
                     </div>
                     <select className="w-40 h-10 border-gray-400 rounded shadow border-2 text-center"
                         onChange={onItemSelected}>
-                        <option value="01HCG9DM9TPF7KFPRV43W10RSY">Azuki</option>
-                        <option value="01HCG9VGFPXMS5FX9M7420Q2MJ">DeGod</option>
-                        <option value="01HCG9MANW29W590JR4W5SHN63">Milady</option>
-                        <option value="01HCG8FS60VK0DRW28324K7JC2">Doodles</option>
-                        <option value="01HCG9GABVSKYCWQ9YBFTST2XQ">Moonbirds</option>
-                        <option value="01HCG9XV3H52FNJRY18QK034V7">The Potatoz</option>
-                        <option value="01HCG9W8QE5VZK5PE1ZEQSBAZF">The Captainz</option>
-                        <option value="01HCG9P9N84K1ZJW35SXGDVP3W">Pudgy Penguins</option>
-                        <option value="01HCG9J9D9DNGKY2TW6NHG81AR">Wrapped CryptoPunks</option>
-                        <option value="01HCG9AF9S4E5ZDDQ2W3AJ2VAR">Bored Ape Yacht Club</option>
-                        <option value="01HCG9KCFQ6G1ZB6ZCJYNBGGFE">Mutant Ape Yacht Club</option>
+                        <option value="01J1WGNKX7WG5QF1BMNZ1GK79J">Azuki</option>
+                        <option value="01J1WGQ34T040Z1JB0B5G60HJD">DeGods</option>
+                        <option value="01J1WGT2Y2KHTHWXHBKMJGV18H">Milady</option>
+                        <option value="01J1WGW3PV49S31MNHQMXHQ85R">Doodles</option>
+                        <option value="01J1WGZKHQ8MYPTKEVBJVGZ589">Moonbirds</option>
+                        <option value="01J1WH1NSNQH96PNNRT78Y3RE1">The Potatoz</option>
+                        <option value="01J1WH3SV1QK0JM9DMZWCA4P2W">The Captainz</option>
+                        <option value="01J1WH56JAE2J51J6WYP9VPQX4">Pudgy Penguins</option>
+                        <option value="01J1WFWPAG2Z881P5923AT26F7">Wrapped CryptoPunks</option>
+                        <option value="01J1WG7T9QYQKN1PM8MGKK004X">Bored Ape Yacht Club</option>
+                        <option value="01J1WH78FBGQ6HJ3XRXK65KGMM">Mutant Ape Yacht Club</option>
                     </select> 
                     <button onClick={startContractExperience} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold mt-1 py-1 px-4 border border-gray-400 rounded shadow">
                         GO

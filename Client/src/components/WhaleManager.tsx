@@ -25,9 +25,10 @@ export default function WhaleManager () {
     // Refs for all the html elements.
     const htmlRefs = useRef([]);
 
-    const {hideTargets, hideWhales} = useControls('Whales', {
+    const {hideTargets, hideWhales, hideSHA} = useControls('Whales', {
         hideTargets: true,
-        hideWhales: false
+        hideWhales: false,
+        hideSHA: false
     });
 
     let topHolders, maxTokens, numWhales;
@@ -95,7 +96,7 @@ export default function WhaleManager () {
                         opacity: 0
                     }}
                 >
-                    {<a target="_blank" href={`https://etherscan.io/address/${topHolders[i]['address']}`}>{topHolders[i]['ens_name'] || topHolders[i]['address']}</a>}
+                    {hideSHA ? <></> : <a target="_blank" href={`https://etherscan.io/address/${topHolders[i]['address']}`}>{topHolders[i]['ens_name'] || topHolders[i]['address']}</a>}
                 </Html>
                 <Whale visible={!hideWhales} />
             </group>
